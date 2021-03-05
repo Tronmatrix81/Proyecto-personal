@@ -1,24 +1,33 @@
-﻿Public Class Formulario
-    Private Const M1 As String = "-----.-..... -.-.----..."
-    Private Const entrar As String = "@gmail.comhello"
-    Private Const existente As String = "@gmail.com"
+﻿Imports System.Data.OleDb
+Imports System.Data
 
+Public Class Formulario
+    Dim connection As New OleDbConnection(My.Settings.DataBase2ConnectionString)
     Private Sub BINGRESAR_Click(sender As Object, e As EventArgs) Handles BINGRESAR.Click
-
-        If TBCORREO.Text & TBCONTRASENA.Text = entrar Then
+        If TBCORREO.Text = Nothing Or TBCONTRASENA.Text = Nothing Then
             Timer1.Stop()
-            MsgBox("Bienvenido", vbInformation, "PSN")
-            Close()
-        End If
-        If TBCORREO.Text = M1 Then
-            Timer1.Stop()
-            MsgBox("Welcome", vbInformation, "PSN")
-            Close()
-        Else
-            Timer1.Stop()
-            MsgBox("Contraseña y/o correo incorrectos", vbExclamation, "Error")
+            MsgBox("Debe completar los datos solicitados primero", vbCritical, "Registrarse")
             TBCONTRASENA.Text = ""
             Timer1.Start()
+        Else
+            If connection.State = ConnectionState.Closed Then
+                connection.Open()
+            End If
+            Dim cmd As New OleDbCommand("select count (*) from tabla1 where Correo=? and CONTRASENA=?", connection)
+            cmd.Parameters.AddWithValue("@1", OleDbType.VarChar).Value = TBCORREO.Text
+            cmd.Parameters.AddWithValue("@2", OleDbType.VarChar).Value = TBCONTRASENA.Text
+            Dim count = Convert.ToInt32(cmd.ExecuteScalar())
+
+            If (count > 0) Then
+                Timer1.Stop()
+                MsgBox("Bienvenid@ " & TBCORREO.Text, vbInformation, "PSN")
+                Close()
+            Else
+                Timer1.Stop()
+                MsgBox("Contraseña y/o correo incorrectos", vbExclamation, "Error")
+                TBCONTRASENA.Text = ""
+                Timer1.Start()
+            End If
         End If
     End Sub
 
@@ -50,37 +59,14 @@
     End Sub
 
     Private Sub BCREAR_Click(sender As Object, e As EventArgs) Handles BCREAR.Click
-        'If TBCORREO.Text = existente Then
-        '    MsgBox("Correo ya existente", vbCritical, "Log In")
-        'Else
-        If TBCORREO.Text & TBCONTRASENA.Text = "" Then
+        If TBCORREO.Text = Nothing Or TBCONTRASENA.Text = Nothing Then
             Timer1.Stop()
-            MsgBox("Debes completar los datos requeridos primero", vbCritical, "Registrarse")
+            MsgBox("Debe completar los datos solicitados primero", vbCritical, "Registrarse")
             Timer1.Start()
+        Else
+            Timer1.Stop()
+            MsgBox("Bienvenid@ " & TBCORREO.Text, vbInformation, "PSN")
+            Close()
         End If
-        'End If
-        If TBCORREO.Text IsNot "" Then
-            If TBCONTRASENA.Text IsNot "" Then
-                'If TBCORREO.Text IsNot existente Then
-                Timer1.Stop()
-                MsgBox("Bienvenido", vbInformation, "Registrado")
-            Else
-                Timer1.Stop()
-                MsgBox("Debes completar los datos requeridos primero", vbCritical, "Registrarse")
-                Timer1.Start()
-            End If
-        End If
-        'End If
-        'If TBCORREO.Text IsNot existente Then
-        If TBCONTRASENA.Text IsNot "" Then
-            If TBCORREO.Text IsNot "" Then
-                Close()
-            Else
-                Timer1.Stop()
-                MsgBox("Debes completar los datos requeridos primero", vbCritical, "Registrarse")
-                Timer1.Start()
-            End If
-        End If
-        'End If
     End Sub
 End Class

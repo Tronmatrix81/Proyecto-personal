@@ -6,7 +6,7 @@ Public Class Formulario
     Private Sub BINGRESAR_Click(sender As Object, e As EventArgs) Handles BINGRESAR.Click
         If TBCORREO.Text = Nothing Or TBCONTRASENA.Text = Nothing Then
             Timer1.Stop()
-            MsgBox("Debe completar los datos solicitados primero", vbCritical, "Registrarse")
+            MsgBox("Debe completar los datos solicitados primero", vbCritical, "Iniciar sesión")
             TBCONTRASENA.Text = ""
             Timer1.Start()
         Else
@@ -59,14 +59,9 @@ Public Class Formulario
     End Sub
 
     Private Sub BCREAR_Click(sender As Object, e As EventArgs) Handles BCREAR.Click
-        If TBCORREO.Text = Nothing Or TBCONTRASENA.Text = Nothing Then
-            Timer1.Stop()
-            MsgBox("Debe completar los datos solicitados primero", vbCritical, "Registrarse")
-            Timer1.Start()
-        Else
-            Timer1.Stop()
-            MsgBox("Bienvenid@ " & TBCORREO.Text, vbInformation, "PSN")
-            Close()
-        End If
+        Timer1.Stop()
+        TBCORREO.Text = ""
+        TBCONTRASENA.Text = ""
+        Registro.ShowDialog()
     End Sub
 End Class

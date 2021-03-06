@@ -66,7 +66,7 @@ Partial Class Formulario
         '
         Me.TBCORREO.AccessibleDescription = ""
         Me.TBCORREO.Location = New System.Drawing.Point(15, 74)
-        Me.TBCORREO.MaxLength = 23
+        Me.TBCORREO.MaxLength = 4000
         Me.TBCORREO.Name = "TBCORREO"
         Me.TBCORREO.Size = New System.Drawing.Size(140, 20)
         Me.TBCORREO.TabIndex = 2
@@ -75,7 +75,7 @@ Partial Class Formulario
         'TBCONTRASENA
         '
         Me.TBCONTRASENA.Location = New System.Drawing.Point(161, 74)
-        Me.TBCONTRASENA.MaxLength = 5
+        Me.TBCONTRASENA.MaxLength = 4000
         Me.TBCONTRASENA.Name = "TBCONTRASENA"
         Me.TBCONTRASENA.PasswordChar = Global.Microsoft.VisualBasic.ChrW(42)
         Me.TBCONTRASENA.Size = New System.Drawing.Size(101, 20)
@@ -202,7 +202,7 @@ Partial Class Formulario
         Me.ForeColor = System.Drawing.Color.Black
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "Formulario"
-        Me.Text = "Registrarse"
+        Me.Text = "Iniciar sesión"
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
